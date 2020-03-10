@@ -23,7 +23,10 @@ public class Account {
     private String clientName;
     private int balance;
     private List<String> transactions = new ArrayList<String>();
-    
+    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    String errorMsg = "Invalid Transaction";
+    String errorTrans = "You don't have enough funds in this account for this transaction. Please try again with a smaller amount";
+    String confiMsg = "Transaction ok";    
     public Account(){}
     public Account(String idAccount, String idClient, String clientName, int balance) {
         this.idAccount = idAccount;
@@ -72,28 +75,25 @@ public class Account {
        if(amount > 0)
        {
            this.balance= this.balance +amount;
-           DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-	   Date date = new Date();
-           
+	   Date date = new Date();       
            this.transactions.add( "Deposit | " + amount+ " Euros | "+ dateFormat.format(date)+" | New Balance | "+ this.balance +" Euros");
            System.out.println("Valid Transaction ");
-           return "Transaction ok";
+           return this.confiMsg;
        }
-       System.out.println("Invalid Transaction");
-       return "Invalid Transaction";
+       System.out.println(this.errorMsg);
+       return this.errorMsg;
     }
      public String withdraw (int amount){
           if(amount > 0 && (this.balance-amount)>-1000)
           {
            this.balance = this.balance -amount;
-           DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 	   Date date = new Date();
            this.transactions.add( "Withdraw | " + amount+ " Euros | "+ dateFormat.format(date)+ " | new Balance | "+ this.balance +" Euros");
-              System.out.println("Valid Transaction"); 
-           return "Transaction ok";
+              System.out.println(this.confiMsg); 
+           return this.confiMsg;
           }else 
-        System.out.println(  "You don't have enough funds in this account for this transaction. Please try again with a smaller amount");
-        return "You don't have enough funds in this account for this transaction. Please try again with a smaller amount";
+        System.out.println(this.errorTrans);
+        return this.errorTrans;
 
      }
      
@@ -106,7 +106,10 @@ public class Account {
    public void showMenu(){
         char option='\0';
      Scanner scanner = new Scanner(System.in);
-     System.out.println("welcome Sir / Madam  " + this.clientName);
+                    System.out.println("-------------------------------------------------------------------");
+                          System.out.println("------------ Welcome Sir / Madam "+ this.clientName +" -----------------");
+                          System.out.println("-------------------------------------------------------------------");
+           
      System.out.println("1 - To check your Balance Account");
      System.out.println("2 - To deposit money");
      System.out.println("3 - To withdraw money");
@@ -114,7 +117,7 @@ public class Account {
      System.out.println("5 - Exit");
         do
         {
-            System.out.println("enter an option");
+            System.out.println("Enter an option");
             option = scanner.next().charAt(0);
                  System.out.println("\n");
                  switch(option){

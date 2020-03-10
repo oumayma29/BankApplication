@@ -57,7 +57,6 @@ public class AccountTest {
     public void testWithdraw1() {
         System.out.println("withdraw");
         assertEquals("You don't have enough funds in this account for this transaction. Please try again with a smaller amount", instance.withdraw(1000));
-
     }
 
     
